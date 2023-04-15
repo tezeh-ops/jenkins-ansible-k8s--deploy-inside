@@ -1,3 +1,5 @@
+# using playbook from Ansible to communiocate with the host server(docker)
+
 - hosts: docker
   become: true
   tasks:
