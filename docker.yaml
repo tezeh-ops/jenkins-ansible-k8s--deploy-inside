@@ -1,0 +1,21 @@
+- hosts: docker
+  become: true
+  tasks:
+  - name: build images
+    shell: docker build -t tezeh/tesla .  # "." means my current working directory -f flag if not 
+  - name: log into dockerhub
+    shell: docker login -u tezeh -p /var/lib/docker/secret   #   
+  - name: push image to dockerhub
+    shell: docker push tezeh/tesla
+    
+# deploying using playbook to K8s
+
+- hosts: k8s
+  tasks:
+  - name: clone helm chart
+    shell : kubectl appy -f app.yml
+    #if we where to deploy using helm it will be...
+  - name: deploy using helm
+    shell: helm repo add app http://github.com/tezeh-ops/app
+  - name: deploy using helm
+    shell: helm install app app/app -f app.valuse
